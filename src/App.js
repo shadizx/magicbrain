@@ -124,7 +124,7 @@ class App extends Component {
       )
       .then((result) => {
         if (result) {
-          fetch('https://magicfacedetector.herokuapp.com/image', {
+          fetch('https://magicfacedetectorbackend.herokuapp.com/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -186,9 +186,9 @@ class App extends Component {
             : (
               route === "signin"
                 ?
-                <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+                <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
                 :
-                <SignUp loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+                <SignUp loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             )
         }
       </div>

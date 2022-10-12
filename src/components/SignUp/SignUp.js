@@ -69,7 +69,7 @@ class SignUp extends React.Component {
             return;
         }
 
-        fetch('https://magicfacedetector.herokuapp.com/register', {
+        fetch('https://magicfacedetectorbackend.herokuapp.com/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -94,6 +94,12 @@ class SignUp extends React.Component {
             .catch(err => console.log(err))
     }
 
+    onEnterPress = (key) => {
+        if (key.keyCode === 13) {
+            this.onSubmitSignUp();
+        }
+    };
+
     render() {
         return (
             <article className="br3 ba dark-gray b--black-10 mv4 w5 w-70-m w-30-l mw7 center ma4 mt0 br2 shadow-2">
@@ -108,7 +114,9 @@ class SignUp extends React.Component {
                                     type="text"
                                     name="name"
                                     id="name"
-                                    onChange={this.onNameChange} />
+                                    onChange={this.onNameChange}
+                                    onKeyDown={this.onEnterPress}
+                                />
                             </div>
                             <form className="mt3">
                                 <label className="db fw6 lh-copy f4" htmlFor="email-address">Email</label>
@@ -117,7 +125,9 @@ class SignUp extends React.Component {
                                     type="email"
                                     name="email-address"
                                     id="email-address"
-                                    onChange={this.onEmailChange} />
+                                    onChange={this.onEmailChange}
+                                    onKeyDown={this.onEnterPress}
+                                />
                             </form>
                             <div id='invalidemail' className='dn pa0 ma0'>
                                 <p>Please enter a valid email address</p>
@@ -129,7 +139,9 @@ class SignUp extends React.Component {
                                     type="password"
                                     name="password"
                                     id="password"
-                                    onChange={this.onPasswordChange} />
+                                    onChange={this.onPasswordChange}
+                                    onKeyDown={this.onEnterPress}
+                                />
                             </div>
                             <div id='invalidpasswordlength' className='dn pa0 ma0'>
                                 <p>Your password must contain atleast eight characters</p>

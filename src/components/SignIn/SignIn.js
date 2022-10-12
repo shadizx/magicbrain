@@ -18,7 +18,7 @@ class SignIn extends React.Component {
     }
 
     onSubmitSignIn = () => {
-        fetch('https://magicfacedetector.herokuapp.com/signin', {
+        fetch('https://magicfacedetectorbackend.herokuapp.com/signin', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -39,6 +39,12 @@ class SignIn extends React.Component {
             })
     }
 
+    onEnterPress = (key) => {
+        if (key.keyCode === 13) {
+            this.onSubmitSignIn();
+        }
+    };
+
     render() {
         const { onRouteChange } = this.props;
         return (
@@ -55,6 +61,7 @@ class SignIn extends React.Component {
                                     name="email-address"
                                     id="email-address"
                                     onChange={this.onEmailChange}
+                                    onKeyDown={this.onEnterPress}
                                 />
                             </div>
                             <div className="mv3">
@@ -64,7 +71,9 @@ class SignIn extends React.Component {
                                     type="password"
                                     name="password"
                                     id="password"
-                                    onChange={this.onPasswordChange} />
+                                    onChange={this.onPasswordChange}
+                                    onKeyDown={this.onEnterPress}
+                                />
                             </div>
                             <div id='invalidlogin' className='dn'>
                                 <p>Invalid email or password</p>
