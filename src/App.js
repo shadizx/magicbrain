@@ -6,6 +6,7 @@ import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
 import Rank from './components/Rank/Rank';
 import ImgForm from './components/ImgForm/ImgForm';
+import Footer from './components/Footer/Footer';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import './App.css';
 
@@ -191,6 +192,7 @@ class App extends Component {
                 <SignUp loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             )
         }
+        <Footer />
       </div>
     );
   }
