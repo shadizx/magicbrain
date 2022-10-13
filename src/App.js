@@ -6,6 +6,7 @@ import SignIn from './components/SignIn/SignIn';
 import SignUp from './components/SignUp/SignUp';
 import Rank from './components/Rank/Rank';
 import ImgForm from './components/ImgForm/ImgForm';
+import Footer from './components/Footer/Footer';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import './App.css';
 
@@ -124,7 +125,7 @@ class App extends Component {
       )
       .then((result) => {
         if (result) {
-          fetch('https://magicfacedetectorbackend.herokuapp.com/image', {
+          fetch('http://localhost:3000/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -191,6 +192,7 @@ class App extends Component {
                 <SignUp loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             )
         }
+        <Footer />
       </div>
     );
   }

@@ -1,0 +1,22 @@
+body {
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+footer {
+    color: whitesmoke;
+    font-size: 12px;
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 40px;
+    background: linear-gradient(90deg, rgba(63,172,223,1) 0%, rgba(111,127,200,1) 35%, rgba(168,74,173,1) 100%);
+}
+
+footer a {
+    color: #000000;
+    text-decoration: none;
+}

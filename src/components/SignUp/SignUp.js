@@ -16,6 +16,7 @@ class SignUp extends React.Component {
     }
 
     onEmailChange = (event) => {
+        document.getElementById('emailexists').style.display = "none";
         var email = event.target.value;
 
         if (!validator.isEmail(email)) {
@@ -69,7 +70,7 @@ class SignUp extends React.Component {
             return;
         }
 
-        fetch('https://magicfacedetectorbackend.herokuapp.com/register', {
+        fetch('http://localhost:3000/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
