@@ -70,7 +70,7 @@ class SignUp extends React.Component {
             return;
         }
 
-        fetch('https://magicfacedetectorbackend.herokuapp.com/signup', {
+        fetch('https://shadimagicbrain-api.onrender.com/signup', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

@@ -18,7 +18,7 @@ class SignIn extends React.Component {
     }
 
     onSubmitSignIn = () => {
-        fetch('https://magicfacedetectorbackend.herokuapp.com/signin', {
+        fetch('https://shadimagicbrain-api.onrender.com/signin', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

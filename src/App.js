@@ -125,7 +125,7 @@ class App extends Component {
       )
       .then((result) => {
         if (result) {
-          fetch('https://magicfacedetectorbackend.herokuapp.com/image', {
+          fetch('https://shadimagicbrain-api.onrender.com/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
