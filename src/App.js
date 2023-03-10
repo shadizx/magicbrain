@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
-import ParticleBackground from './components/ParticleBackground/ParticleBackground';
-import Navigation from './components/Navigation/Navigation';
-import Logo from './components/Logo/Logo';
-import SignIn from './components/SignIn/SignIn';
-import SignUp from './components/SignUp/SignUp';
-import Rank from './components/Rank/Rank';
-import ImgForm from './components/ImgForm/ImgForm';
-import Footer from './components/Footer/Footer';
-import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import './App.css';
+import React, { Component } from "react";
+import ParticleBackground from "./components/ParticleBackground/ParticleBackground";
+import Navigation from "./components/Navigation/Navigation";
+import Logo from "./components/Logo/Logo";
+import SignIn from "./components/SignIn/SignIn";
+import SignUp from "./components/SignUp/SignUp";
+import Rank from "./components/Rank/Rank";
+import ImgForm from "./components/ImgForm/ImgForm";
+import Footer from "./components/Footer/Footer";
+import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
+import "./App.css";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      input: '',
-      imageUrl: '',
+      input: "",
+      imageUrl: "",
       faces: [],
-      route: 'signin',
+      route: "signin",
       isSignedIn: false,
       user: {
-        id: '',
-        name: '',
-        email: '',
+        id: "",
+        name: "",
+        email: "",
         entries: 0,
-        joined: ''
-      }
-    }
+        joined: "",
+      },
+    };
   }
 
   loadUser = (data) => {
@@ -36,14 +36,14 @@ class App extends Component {
         name: data.name,
         email: data.email,
         entries: data.entries,
-        joined: data.joined
-      }
-    })
-  }
+        joined: data.joined,
+      },
+    });
+  };
 
   calculateFaceLocation = (data) => {
     const facesList = data.outputs[0].data.regions;
-    const image = document.getElementById('inputImage');
+    const image = document.getElementById("inputImage");
     const width = Number(image.width);
     const height = Number(image.height);
 
@@ -55,27 +55,32 @@ class App extends Component {
 
       const leftCol = faceDims.left_col * width;
       const topRow = faceDims.top_row * height;
-      const rightCol = width - (faceDims.right_col * width);
-      const bottomRow = height - (faceDims.bottom_row * height);
+      const rightCol = width - faceDims.right_col * width;
+      const bottomRow = height - faceDims.bottom_row * height;
 
       faces.push(
         <div
           className="bounding-box"
-          style={{ top: topRow, right: rightCol, bottom: bottomRow, left: leftCol }}>
-        </div>
+          style={{
+            top: topRow,
+            right: rightCol,
+            bottom: bottomRow,
+            left: leftCol,
+          }}
+        ></div>
       );
     }
 
     return faces;
-  }
+  };
 
   displayFaces = (faces) => {
     this.setState({ faces: faces });
-  }
+  };
 
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
-  }
+  };
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
@@ -114,30 +119,30 @@ class App extends Component {
 
     fetch(
       "https://api.clarifai.com/v2/models/" +
-      MODEL_ID +
-      "/versions/" +
-      MODEL_VERSION_ID +
-      "/outputs",
+        MODEL_ID +
+        "/versions/" +
+        MODEL_VERSION_ID +
+        "/outputs",
       requestOptions
     )
-      .then((response) =>
-        response.json()
-      )
+      .then((response) => response.json())
       .then((result) => {
         if (result) {
-          fetch('https://magicbrain-api.onrender.com/image', {
-            method: 'put',
-            headers: { 'Content-Type': 'application/json' },
+          fetch("https://magicbrain.onrender.com/image", {
+            method: "put",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              id: this.state.user.id
-            })
+              id: this.state.user.id,
+            }),
           })
-            .then(response => response.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, { entries: count.entries }))
-            })
+            .then((response) => response.json())
+            .then((count) => {
+              this.setState(
+                Object.assign(this.state.user, { entries: count.entries })
+              );
+            });
         }
-        this.displayFaces(this.calculateFaceLocation(result))
+        this.displayFaces(this.calculateFaceLocation(result));
       })
       .catch((error) => console.log("error", error));
   };
@@ -149,12 +154,12 @@ class App extends Component {
   };
 
   onRouteChange = (route) => {
-    console.log('route is ', route);
+    console.log("route is ", route);
 
-    if (route === 'signout') {
+    if (route === "signout") {
       this.setState({ isSignedIn: false });
-      this.setState({ route: 'signin' });
-    } else if (route === 'home') {
+      this.setState({ route: "signin" });
+    } else if (route === "home") {
       this.setState({ isSignedIn: true });
       this.setState({ route: route });
     } else {
@@ -166,32 +171,30 @@ class App extends Component {
     const { isSignedIn, imageUrl, route, faces } = this.state;
     return (
       <div className="App">
-        <ParticleBackground className='particles' />
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        <ParticleBackground className="particles" />
+        <Navigation
+          isSignedIn={isSignedIn}
+          onRouteChange={this.onRouteChange}
+        />
         <Logo />
-        {
-          route === 'home'
-            ?
-            <div>
-              <Rank
-                name={this.state.user.name}
-                entries={this.state.user.entries}
-              />
-              <ImgForm
-                onInputChange={this.onInputChange}
-                onButtonSubmit={this.onButtonSubmit}
-                onEnterPress={this.onEnterPress}
-              />
-              <FaceRecognition faces={faces} imageUrl={imageUrl} />
-            </div>
-            : (
-              route === "signin"
-                ?
-                <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-                :
-                <SignUp loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-            )
-        }
+        {route === "home" ? (
+          <div>
+            <Rank
+              name={this.state.user.name}
+              entries={this.state.user.entries}
+            />
+            <ImgForm
+              onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit}
+              onEnterPress={this.onEnterPress}
+            />
+            <FaceRecognition faces={faces} imageUrl={imageUrl} />
+          </div>
+        ) : route === "signin" ? (
+          <SignIn loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+        ) : (
+          <SignUp loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+        )}
         <Footer />
       </div>
     );
